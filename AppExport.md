@@ -1,28 +1,28 @@
 # App Export
 
-## Firmware for ESP8266, NodeMCU, BlynkBoard, etc.
+## Firmware voor ESP8266, NodeMCU, BlynkBoard, etc.
 
-#### Prepare development environment
-1. Install [Arduino IDE](https://www.arduino.cc/en/Main/Software)
-2. Install [Blynk Library](https://github.com/blynkkk/blynk-library/releases/latest) and restart Arduino IDE
-3. Install [ESP8266 core for Arduino](https://github.com/esp8266/Arduino#installing-with-boards-manager)
-4. For Windows / OS X, you may need to install USB-Serial drivers according to your converter:
- - СP2102: https://www.silabs.com/products/mcu/Pages/USBtoUARTBridgeVCPDrivers.aspx 
+#### Voorbereiding voor je ontwikkel omgeving
+1. Installeer [Arduino IDE](https://www.arduino.cc/en/Main/Software)
+2. Installeer [Blynk Library](https://github.com/blynkkk/blynk-library/releases/latest) en start de Arduino IDE opnieuw op
+3. Installeer [ESP8266 core for Arduino](https://github.com/esp8266/Arduino#installing-with-boards-manager)
+4. Voor Windows / macOS is het mogelijk dat je drivers voor je serieële poort moet installeren, al naar gelang de convertor die gebruikt:
+ - СP2102: https://www.silabs.com/products/mcu/Pages/USBtoUARTBridgeVCPDrivers.aspx
  - FTDI (FT232, etc): http://www.ftdichip.com/Drivers/VCP.htm
  - *TODO: Link to drivers for CH340 and PL2303.*
-5. If your board has a NeoPixel RGB LED, install [Adafruit NeoPixel](https://github.com/adafruit/Adafruit_NeoPixel) library from Library Manager
+5. Als je bord een NeoPixel RGB LED aan boord heeft, installeer [Adafruit NeoPixel](https://github.com/adafruit/Adafruit_NeoPixel) library vanuit de Library Manager
 
-#### Build your Firmware
-1. Open our example in Arduino IDE: ```File -> Examples -> Blynk -> Provisioning -> Blynk_ESP8266```
+#### Bouw je Firmware
+1. Open het voorbeeld in de Arduino IDE: ```File -> Examples -> Blynk -> Provisioning -> Blynk_ESP8266```
 2. Open ```Settings.h``` tab.
-3. Configure your firmware:
+3. Configureer je firmware:
   * ```BOARD_NAME``` - ...
   * ```BOARD_VENDOR``` - ...
   * ```PRODUCT_WIFI_SSID``` - ...
-  
-#### Upload firmare
-1. Select your board type: ```Tools -> Board -> [Your Board]```
-2. Select your port: ```Tools -> Port -> [...]```
-3. Verify and Upload!
 
-Note that for Blynk Board, you can select board type ```NodeMCU 1.0```.
+#### Upload firmare
+1. Selecteer het type bord: ```Tools -> Board -> [Your Board]```
+2. Selecteer de poort: ```Tools -> Port -> [...]```
+3. Verify en Upload!
+
+Voor het Blynk Board kun je het volgende type selecteren ```NodeMCU 1.0```.

@@ -1,12 +1,12 @@
-#Blynk Amendments
-###Tell every maker about Blynk
-No pressure. Just do it. Now.
-###Make your idea work without Blynk
-Blynk can be easily integrated in almost any project. But before that - make it work **without** it. After you are sure that you can get all the sensor data or can control things from the code – integrate Blynk and make it even more awesome.
-###Use search
-We are always happy to chat and help, but remember - every time you ask the question that was answered many many times before that, Blynk Team is not building a new widget or new cool feature. So:
-- google before asking
-- use search on our forum, it works really well
-- check Instructables
-###Always wrap your code
-Though shalt not post code without ```wrapping it``` 
+#Blynk Toevoegingen
+###Vertel iedere maker over Blynk
+Geen druk. Doe 't gewoon. Nu.
+###Maak je idee werkend zonder Blynk
+Integratie van Blynk in je project is super simpel. Maar, begin **zonder**. Nadat je alles werkend hebt gemaakt en al je sensoren kan uitlezen vanuit je code kan je makkelijk Blynk integreren en maak je het project nog waanzinniger.
+###Gebruik de zoekfunctie
+Uiteraard staan we je graag bij met hulp, maar denk er aan, iedere keer dat we reeds gestelde vragen beantwoorden werkt ons Blynk Team niet aan nieuwe super coole widgets en functies, dus:
+- Google is je vriend
+- Gebruik de zoekfunctie op het forum, die werkt echt goed
+- Op Instructables vind je ook een hoop
+###Formatteer je code
+Gij zult geen code posten zonder ```opmaak```

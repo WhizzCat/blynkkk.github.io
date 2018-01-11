@@ -1,82 +1,81 @@
 #Blynk Firmware
-## Configuration
+## Configuratie
 
 ### Blynk.begin()
 
-The simplest way to configure Blynk is to call ```Blynk.begin()```:
+De simpelste manier om Blynk te configureren is ```Blynk.begin()```:
 
 ```cpp
 Blynk.begin(auth, ...);
 ```
-It has various parameters for different hardware, depending on the type of connection you use. Follow the example sketches for your board.
+Je kan verschillende parameters gebruiken, afhankelijk van de hardware en het soort verbinding dat je gebruikt. Gebruik de voorbeelden die bij je bord horen.
 
-```begin()``` is basically doing these steps:
+```begin()``` voert de volgende stappen uit:
 
-1. Connects to network (WiFi, Ethernet, ...)
-2. Calls ```Blynk.config(...)``` - sets auth token, server address
-3. Tries to connects to the server once (can block for more than 30s)
+1. Verbind met een netwerk (WiFi, Ethernet, ...)
+2. Roept ```Blynk.config(...)``` - configureerd het auth token, server adres
+3. Probeert verbinding te maken met de server (timeout van 30s, blokkerende functie)
 
-If your shield/connection type is not supported yet - you can craft it yourself easily! 
-[Here are some examples](https://github.com/blynkkk/blynk-library/tree/master/examples/More/ArduinoClient).
+Als je shield/verbinding niet ondersteund wordt, kan je dat simpel zelf oplossen!
+[Hier zijn een paar voorbeelden](https://github.com/blynkkk/blynk-library/tree/master/examples/More/ArduinoClient).
 
 ### Blynk.config()
 
-```config()``` allows you to manage network connection yourself.
-You can set up your shield (WiFi, Ethernet, ...) manually, and then call:
+```config()``` kan je gebruiken als je zelf je verbinding wil maken
+Configureer je verbinding (WiFi, Ethernet, ...) handmatig en gebruik dan:
 
 ```cpp
 Blynk.config(auth, server, port);
 ```
-or just
+of
 ```cpp
 Blynk.config(auth);
 ```
 
-**Note:** Just after ``` Blynk.config(...) ```, Blynk is not yet connected to the server.  
-It will try to connect when it reaches first ``` Blynk.run() ``` or ``` Blynk.connect() ```call.  
-If you want to skip connecting to the server, just call ``` Blynk.disconnect() ``` right after configuration.
+**Aantekening** Nadat ``` Blynk.config(...) ``` is aangeroepen, is Blynk nog niet verbonden met de server. Vanaf het aanroepen van ``` Blynk.run() ``` of ``` Blynk.connect() ``` wordt er geprobeerd een verbinding met de server te maken.  
+Als je geen verbinding met de server wil maken kan je ``` Blynk.disconnect() ``` aanroepen, direct na je configuratie.
 
-For setting-up WiFi connection, you can use a ```connectWiFi``` (just for convenience):
+Mocht je WiFi gebruiken, kan je simpel ```connectWiFi``` aanroepen (om het makkelijk te maken):
 
 ```cpp
 Blynk.connectWiFi(ssid, pass);
 ```
-To connect to open WiFi networks, set pass to an empty string (```""```).
+Als je naar open WiFi netwerken verbindt, gebruik dan een lege string als wachtwoord (```""```).
 
-## Connection management
+## Verbindings beheer
 
-There are several functions to help with connection management:
+Er zijn een aantal verschillende functies om je te helpen met het beheer van de verbinding:
 
 ### Blynk.connect()
 
 ```cpp
-# This functions will try connecting to Blynk server.
-# Returns true when connected, false if timeout reached.
-# Default timeout is 30 seconds.
+# Deze functie probeert verbinding te maken met de server.
+# Geeft true terug als de verbinding opgezet is of false als de de timeout bereikt is
+# De standaard timeout is 30 seconden
 bool result = Blynk.connect();
 bool result = Blynk.connect(timeout);
 ```
 
 ### Blynk.disconnect()
 
-To disconnect from Blynk server, use:
+Om de verbinding te verbreken, gebruik je:
 
 ```cpp
 Blynk.disconnect();
 ```
 
 ### Blynk.connected()
-To get the status of connection to Blynk Server use:
+Om de status van de verbinding naar de Blynk Server op te vragen:
 
 ```cpp
 bool result = Blynk.connected();
 ```
 
 ### Blynk.run()
-This function should be called frequently to process incoming commands and perform housekeeping of Blynk connection.
-It is usually called in ``` void loop() {} ```.
+Deze functie moet regelmatig aangeroepen worden om alle Blynk verbindingen, commando's, binnenkomende data en de huishouding van de verbinding te regelen.
+Deze wordt normaal gesproken aangeroepen in ``` void loop() {} ```.
 
-You can initiate it in other places, unless you run out of heap memory (in the cascaded functions with local memory).
+
 For example, it is not recommended to call ``` Blynk.run() ``` inside of the  ```BLYNK_READ ``` and ``` BLYNK_WRITE ``` functions on low-RAM devices.
 
 ## Digital & Analog pins control
@@ -90,16 +89,16 @@ The library can perform basic pin IO (input-output) operations out-of-the-box:
 No need to write code for simple things like LED, Relay control and analog sensors.
 
 ## Virtual pins control
-Virtual Pins are designed to send any data from your microcontroller to the Blynk App and back. 
-Think about Virtual Pins as channels for sending any data. Make sure you differentiate Virtual Pins from physical 
+Virtual Pins are designed to send any data from your microcontroller to the Blynk App and back.
+Think about Virtual Pins as channels for sending any data. Make sure you differentiate Virtual Pins from physical
 pins on your hardware. Virtual Pins have no physical representation.
 
-Virtual Pins can be used to interface with libraries (Servo, LCD and others) and implement custom functionality. 
+Virtual Pins can be used to interface with libraries (Servo, LCD and others) and implement custom functionality.
 The device may send data to the App using  ```Blynk.virtualWrite(pin, value)``` and receive data from the App using ```BLYNK_WRITE(vPIN)```.
 
 #### Virtual Pin data types
 The actual values are sent as strings, so there are no practical limits on the data that can be sent.  
-However, remember the limitations of the platform when dealing with numbers. For example the integer on Arduino 
+However, remember the limitations of the platform when dealing with numbers. For example the integer on Arduino
 is 16-bit, allowing range -32768 to 32767.
 You can interpret incoming data as Integers, Floats, Doubles and Strings:
 ```cpp
@@ -151,7 +150,7 @@ This allows [changing widget properties](#blynk-main-operations-change-widget-pr
 BLYNK_WRITE(V0)
 {   
   int value = param.asInt(); // Get value as integer
-  
+
   // The param can contain multiple values, in such case:
   int x = param[0].asInt();
   int y = param[1].asInt();
