@@ -75,32 +75,34 @@ bool result = Blynk.connected();
 Deze functie moet regelmatig aangeroepen worden om alle Blynk verbindingen, commando's, binnenkomende data en de huishouding van de verbinding te regelen.
 Deze wordt normaal gesproken aangeroepen in ``` void loop() {} ```.
 
+Het is bijvoorbeeld niet aan te raden om ``` Blynk.run() ``` aan te roepen binnen ```BLYNK_READ ``` en/of ``` BLYNK_WRITE ``` op borden met weinig RAM
 
-For example, it is not recommended to call ``` Blynk.run() ``` inside of the  ```BLYNK_READ ``` and ``` BLYNK_WRITE ``` functions on low-RAM devices.
-
-## Digital & Analog pins control
-The library can perform basic pin IO (input-output) operations out-of-the-box:
+## Digitale & Analoge pinnen besturen
+De library kan out-of-the-box de basis I/O besturingen aan:
 
     digitalRead
     digitalWrite
     analogRead
-    analogWrite (PWM or Analog signal depending on the platform)
+    analogWrite (PWM of analoog signaal, afhankelijk van je platform)
 
-No need to write code for simple things like LED, Relay control and analog sensors.
+Er is dus geen code nodig voor simpele dingen als een LED, relais aan/uit of analoge sensoren uitlezen.
 
-## Virtual pins control
-Virtual Pins are designed to send any data from your microcontroller to the Blynk App and back.
-Think about Virtual Pins as channels for sending any data. Make sure you differentiate Virtual Pins from physical
-pins on your hardware. Virtual Pins have no physical representation.
+## Virtuele pinnen besturen
+Virtuele pinnen zijn ontworpen om allerlei soorten data van je micro controller naar de Blynk App te sturen en vice versa.
+Vergelijk een Virtuele pin maar met een data kanaal waarover je van alles kan sturen. Let wel op dat je Virtuele pinnen onderscheid
+van fysieke pinnen op je hardware. Virtuele pinnen zijn slechts dat, virtueel en hebben geen fysieke eigenschappen.
 
-Virtual Pins can be used to interface with libraries (Servo, LCD and others) and implement custom functionality.
-The device may send data to the App using  ```Blynk.virtualWrite(pin, value)``` and receive data from the App using ```BLYNK_WRITE(vPIN)```.
+Virtuele pinnen zijn bij uitstek geschikt om interfaces te bouwen met allerhande 3e partij libraries (Servo, LCD en vele anderen)
+om aangepaste functionaliteit te maken.
+Je apparaat kan gebruik maken van ```Blynk.virtualWrite(pin, value)``` om data naar de Blynk App te sturen en van ```BLYNK_WRITE(vPIN)```
+om data van de Blynk App te ontvangen.
 
-#### Virtual Pin data types
-The actual values are sent as strings, so there are no practical limits on the data that can be sent.  
-However, remember the limitations of the platform when dealing with numbers. For example the integer on Arduino
-is 16-bit, allowing range -32768 to 32767.
-You can interpret incoming data as Integers, Floats, Doubles and Strings:
+#### Virtuele pinnen data types
+De waardes van de Virtuele pinnen worden verstuurd als strings, dus in principe zijn er geen limieten
+aan de data die verstuurd kan worden.
+Waar je wel om moet denken, de limieten van je gebruikte hardware platform. Bijvoorbeeld de integer op de
+Arduino is 16 bit, die loopt dus van -32768 naar 32768
+Je kan binnenkomende data opvangen en interpreteren als Integers, Float, Double en Strings:
 ```cpp
 param.asInt();
 param.asFloat();
@@ -108,7 +110,7 @@ param.asDouble();
 param.asStr();
 ```
 
-You can also get the RAW data from the param buffer:
+Je kan ook de hele inhoud van de raw buffer opvragen:
 
 ```cpp
 param.getBuffer()
@@ -117,30 +119,30 @@ param.getLength()
 
 ### Blynk.virtualWrite(vPin, value)
 
-You can send all the formats of data to Virtual Pins
+Het is mogelijk om allerlei soorten data naar de Virtuele pinnen te sturen
 
 ```cpp
-// Send string
+// Stuur string
 Blynk.virtualWrite(pin, "abc");
 
-// Send integer
+// Stuur integer
 Blynk.virtualWrite(pin, 123);
 
-// Send float
+// Stuur float
 Blynk.virtualWrite(pin, 12.34);
 
-// Send multiple values as an array
+// Stuur meerdere waardes als Array
 Blynk.virtualWrite(pin, "hello", 123, 12.34);
 
-// Send RAW data
+// Stuur RAW data
 Blynk.virtualWriteBinary(pin, buffer, length);
 ```
 
-**Note:** Calling ```virtualWrite``` attempts to send the value to the network immediately.
+**Aantekening:** Na het aanroepen van ```virtualWrite``` probeert de Virtuele pin de data direct naar het netwerk te schrijven
 
-### Blynk.setProperty(vPin, "property", value)
+### Blynk.setProperty(vPin, "eigenschap", waarde)
 
-This allows [changing widget properties](#blynk-main-operations-change-widget-properties)
+Hiermee kan je [widget eigenschappen wijzigen](#blynk-main-operations-change-widget-properties)
 
 ### BLYNK_WRITE(vPIN)
 

@@ -1,15 +1,16 @@
-# Blynk main operations
+# Blynk belangrijkste functies
 
-## Virtual Pins
-Blynk can control Digital and Analog I/O Pins on you hardware directly. You don't even need to write code for it. 
-It's great for blinking LEDs, but often it's just not enough...
+## Virtuele pinnen
+Met Blynk is het mogelijk om direct Analoge en Digitale I/O pinnen aan te sturen. Zonder ook maar een regel code hiervoor te hoeven schrijven.
+Fantastische als je een LED wil laten knipperen, maar als maker wil je vaak meer...
 
-We designed Virtual Pins to send **any** data from your microcontroller to the Blynk App and back. 
+Daarom hebben we Virtuele pinnen geïntroduceerd
+We designed Virtual Pins to send **any** data from your microcontroller to the Blynk App and back.
 
 Anything you connect to your hardware will be able to talk to Blynk.
 With Virtual Pins you can send something from the App, process it on microcontroller and then send it back to the smartphone. You can trigger functions, read I2C devices, convert values, control servo and DC motors etc.
 
-Virtual Pins can be used to interface with external libraries (Servo, LCD and others) and implement custom functionality. 
+Virtual Pins can be used to interface with external libraries (Servo, LCD and others) and implement custom functionality.
 
 Hardware may send data to the Widgets over the Virtual Pin like this:
 
@@ -25,16 +26,16 @@ For more information about virtual pins, [read this](http://docs.blynk.cc/#blynk
 ## Send data from app to hardware
 You can send any data from Widgets in the app to your hardware.
 
-All [Controller Widgets](http://docs.blynk.cc/#widgets-controllers) can send data to Virtual Pins on your hardware. 
+All [Controller Widgets](http://docs.blynk.cc/#widgets-controllers) can send data to Virtual Pins on your hardware.
 For example, code below shows how to get values from the Button Widget in the App
 
 ```cpp
 BLYNK_WRITE(V1) //Button Widget is writing to pin V1
 {
-  int pinData = param.asInt(); 
+  int pinData = param.asInt();
 }
 ```
-When you press a Button, Blynk App sends ```1``` On the second click - it sends ```0``` 
+When you press a Button, Blynk App sends ```1``` On the second click - it sends ```0```
 
 This is how Button Widget is set up:
 
@@ -43,13 +44,13 @@ This is how Button Widget is set up:
 
 Full example sketch: [Get Data](https://github.com/blynkkk/blynk-library/blob/master/examples/GettingStarted/GetData/GetData.ino#L24)
 
-### Sending array from Widget 
-Some Widgets (e.g Joystick, zeRGBa) have more than one output. 
+### Sending array from Widget
+Some Widgets (e.g Joystick, zeRGBa) have more than one output.
 
 <img src="images/joystick_merge_mode.png" style="width: 200px; height:360px"/>
 
-This output can be written to Virtual Pin as an array of values. 
-On the hardware side - you can get any element of the array [0,1,2...] by using: 
+This output can be written to Virtual Pin as an array of values.
+On the hardware side - you can get any element of the array [0,1,2...] by using:
 
 ```cpp
 BLYNK_WRITE(V1) // Widget WRITEs to Virtual Pin V1
@@ -82,9 +83,9 @@ BLYNK_READ(V5) // Widget in the app READs Virtal Pin V5 with the certain frequen
 
 
 ### Pushing data from hardware
-If you need to PUSH sensor or other data from your hardware to Widget, you can write any logic you want. 
+If you need to PUSH sensor or other data from your hardware to Widget, you can write any logic you want.
 Just set the frequency to PUSH mode. Any command that hardware sends to Blynk Cloud is automatically stored on server
-and you get this info either with [History Graph](http://docs.blynk.cc/#widgets-displays-history-graph) widget 
+and you get this info either with [History Graph](http://docs.blynk.cc/#widgets-displays-history-graph) widget
 or with [HTTP API](http://docs.blynkapi.apiary.io/#reference/0/pin-history-data/get-all-history-data-for-specific-pin).
 
 <img src="images/frequency_reading_push.png" style="width: 200px; height:360px"/>
@@ -102,14 +103,14 @@ Here is how it can work:
 
 char auth[] = "YourAuthToken"; // Put your token here
 
-BlynkTimer timer; // Create a Timer object called "timer"! 
+BlynkTimer timer; // Create a Timer object called "timer"!
 
 void setup()
 {
   Serial.begin(9600);
   Blynk.begin(auth);
-  
-  timer.setInterval(1000L, sendUptime); //  Here you set interval (1sec) and which function to call 
+
+  timer.setInterval(1000L, sendUptime); //  Here you set interval (1sec) and which function to call
 }
 
 void sendUptime()
@@ -118,7 +119,7 @@ void sendUptime()
   // In the app, Widget's reading frequency should be set to PUSH
   // You can send anything with any interval using this construction
   // Don't send more that 10 values per second
-  
+
   Blynk.virtualWrite(V5, millis() / 1000);
 }
 
@@ -148,7 +149,7 @@ BLYNK_WRITE(V0) {
 
 ```
 
-The ```Blynk.syncAll()``` command restores all the Widget's values based on the last saved values on the server. 
+The ```Blynk.syncAll()``` command restores all the Widget's values based on the last saved values on the server.
 All analog and digital pin states will be restored. Every Virtual Pin will perform ```BLYNK_WRITE``` event.
 
 [Sync Hardware with App state](https://github.com/blynkkk/blynk-library/blob/master/examples/More/Sync/HardwareSyncStateFromApp/HardwareSyncStateFromApp.ino)
@@ -164,8 +165,8 @@ You can also use server to store any value without widget. Just call ```Blynk.vi
 ### For app
 If you need to keep your hardware in sync with Widgets' state even if app is offline use ```Blynk.virtualWrite```.
 
-Imagine you have a LED Widget connected to the Virtual Pin V1 in the app, and a physical button attached to your hardware. 
-When you press a physical button, you would expect to see updated state of the LED Widget in the app. 
+Imagine you have a LED Widget connected to the Virtual Pin V1 in the app, and a physical button attached to your hardware.
+When you press a physical button, you would expect to see updated state of the LED Widget in the app.
 To achieve that you need to send ```Blynk.virtualWrite(V1, 255)``` when a physical button gets pressed.
 
 [Represent physical button state via LED widget with interrupts](https://github.com/blynkkk/blynk-library/blob/master/examples/More/Sync/ButtonInterrupt/ButtonInterrupt.ino)
@@ -175,21 +176,21 @@ To achieve that you need to send ```Blynk.virtualWrite(V1, 255)``` when a physic
 [Represent physical button state via Button widget with polling](https://github.com/blynkkk/blynk-library/blob/master/examples/More/Sync/SyncPhysicalButton/SyncPhysicalButton.ino)
 
 ## Control of multiple devices
-Blynk app has support of multiple devices. That means you can assign any widget to specific device with own auth token. 
-For example - you may have button on V1 that controls wi-fi bulb A and another button on V1 that controls wi-fi bulb B. In order 
-to do this you need more than 1 device within your project. To achieve this please go to project settings and click on "Devices" section : 
+Blynk app has support of multiple devices. That means you can assign any widget to specific device with own auth token.
+For example - you may have button on V1 that controls wi-fi bulb A and another button on V1 that controls wi-fi bulb B. In order
+to do this you need more than 1 device within your project. To achieve this please go to project settings and click on "Devices" section :
 
 <img src="images/new_project_settings.png" style="width: 200px; height:360px"/>
 
 You'll see list of devices :
- 
+
 <img src="images/list_of_devices.png" style="width: 200px; height:360px"/>
 
-So you can add new device : 
+So you can add new device :
 
 <img src="images/new_device.png" style="width: 200px; height:360px"/>
 
-After above steps, every widget will have one more field "Target" : 
+After above steps, every widget will have one more field "Target" :
 
 <img src="images/widget_settings_devices.png" style="width: 200px; height:360px"/>
 
@@ -199,29 +200,29 @@ That's it! Now you need to upload sketches with correct Auth Tokens to your hard
 
 ### Tags
 
-Tags feature allows you to group multiple devices. Tags are very useful in case you want to control few devices with 
-1 widget. For example, imagine a case when you have 3 smart bulbs and you want to turn on all those bulbs with one 
+Tags feature allows you to group multiple devices. Tags are very useful in case you want to control few devices with
+1 widget. For example, imagine a case when you have 3 smart bulbs and you want to turn on all those bulbs with one
 single click. You need to assign 3 devices to 1 tag and assign tag to button. That's it.
 
-Tag widgets also support state syncing. So you can get state of widget from your hardware. However you can't update 
+Tag widgets also support state syncing. So you can get state of widget from your hardware. However you can't update
 state of such widgets from hardware.
 
 ## Devices online status
 Blynk app has support for online statuses for multiple devices.
- 
+
 <img src="images/online_status.png" style="width: 200px; height:360px"/>
 
-In ideal world when device closes tcp connection with some ```connection.close()``` - connected server will get notification 
-regarding closed connection. So you can get instant status update on UI. However in real world this mostly exceptional situation. 
-In majority of cases there is no easy and instant way to find out that connection is not active anymore. 
+In ideal world when device closes tcp connection with some ```connection.close()``` - connected server will get notification
+regarding closed connection. So you can get instant status update on UI. However in real world this mostly exceptional situation.
+In majority of cases there is no easy and instant way to find out that connection is not active anymore.
 
-That's why Blynk uses ```HEARTBEAT``` mechanism. With this approach hardware periodically sends ```ping``` command with predefined 
-interval (10 seconds by default, ```BLYNK_HEARTBEAT``` [property](https://github.com/blynkkk/blynk-library/blob/master/src/Blynk/BlynkConfig.h)). 
-In case hardware don't send anything within 10 seconds server waits additional 5 seconds and after that connection 
-assumed to be broken and closed by server. So on UI you'll see connection status update only after 15 seconds when it is 
+That's why Blynk uses ```HEARTBEAT``` mechanism. With this approach hardware periodically sends ```ping``` command with predefined
+interval (10 seconds by default, ```BLYNK_HEARTBEAT``` [property](https://github.com/blynkkk/blynk-library/blob/master/src/Blynk/BlynkConfig.h)).
+In case hardware don't send anything within 10 seconds server waits additional 5 seconds and after that connection
+assumed to be broken and closed by server. So on UI you'll see connection status update only after 15 seconds when it is
 actually happened.
 
-You can also change ```HEARTBEAT``` interval from hardware side via ```Blynk.config```. In that case ```newHeartbeatInterval * 2.3``` formula will be applied. So in case you you decided to set ```HEARTBEAT``` interval to 
+You can also change ```HEARTBEAT``` interval from hardware side via ```Blynk.config```. In that case ```newHeartbeatInterval * 2.3``` formula will be applied. So in case you you decided to set ```HEARTBEAT``` interval to
 5 seconds. You'll get notification regarding connection with 11 sec delay in worst case.
 
 ## Project Settings
@@ -232,11 +233,11 @@ Every project has it's own settings:
 
 - **Theme** - switch between the Light and Black Blynk Theme (Business accounts have wider choice);
 - **Keep screen always on** - allows you to use the Blynk app without going to the sleep mode (usually all mobile devices do that);
-- **Send app connected command** - with this option enabled the server will send "App Connected" and "App Disconnected" commands 
+- **Send app connected command** - with this option enabled the server will send "App Connected" and "App Disconnected" commands
 to your hardware when your Blynk app goes online/offline. [Usage example](https://github.com/blynkkk/blynk-library/blob/master/examples/More/AppConnectedEvents/AppConnectedEvents.ino);
-- **Do not show offline notifications** - right now, for debugging purposes, every time your hardware goes offline - the Blynk 
-Server will notify you with popup in the app about that. However, when debugging is not needed or the Blynk app is used only 
-via HTTP/S this notifications are meaningless. So this switch allows you to turn off this popups. Also this switch turns off 
+- **Do not show offline notifications** - right now, for debugging purposes, every time your hardware goes offline - the Blynk
+Server will notify you with popup in the app about that. However, when debugging is not needed or the Blynk app is used only
+via HTTP/S this notifications are meaningless. So this switch allows you to turn off this popups. Also this switch turns off
 the Push notification "Notify when offline" option.
 
 
@@ -262,23 +263,23 @@ Blynk.setProperty(V0, "labels", "Menu Item 1", "Menu Item 2", "Menu Item 3");
 
 **NOTE : ** Changing these parameters work **only** for widgets attached to Virtual pins (analog/digital pins won't work).
 
-Four widget properties are supported - ```color```, ```label```, ```min```, ```max``` for all widgets : 
+Four widget properties are supported - ```color```, ```label```, ```min```, ```max``` for all widgets :
 
 ```label``` is string for label of all widgets.
 
-```color``` is string in [HEX](http://www.w3schools.com/html/html_colors.asp) format (in the form: #RRGGBB, 
+```color``` is string in [HEX](http://www.w3schools.com/html/html_colors.asp) format (in the form: #RRGGBB,
 where RR (red), GG (green) and BB (blue) are hexadecimal values between 00 and FF). For example :
-``` 
+```
 #define BLYNK_GREEN     "#23C48E"
 #define BLYNK_BLUE      "#04C0F8"
 #define BLYNK_YELLOW    "#ED9D00"
 #define BLYNK_RED       "#D3435C"
 #define BLYNK_DARK_BLUE "#5F7CD8"
-``` 
+```
 
 On firmware side, widget objects also support ```setLabel()``` and ```setColor()``` functions.
 
-Widget specific properties: 
+Widget specific properties:
 
 **Button**
 
@@ -289,16 +290,16 @@ Widget specific properties:
 **Music Player**
 
 ```isOnPlay``` is boolean accepts true/false.
-``` 
+```
 Blynk.setProperty(V0, "isOnPlay", "true");
-``` 
+```
 
 **Menu**
 
 ```labels``` is list of strings for Menu widget selections;
-``` 
+```
 Blynk.setProperty(V0, "labels", "label 1", "label 2", "label 3");
-``` 
+```
 
 **Video Streaming**
 
@@ -309,15 +310,15 @@ Blynk.setProperty(V1, "url", "http://my_new_video_url");
 You can also change widget properties via [HTTP API](http://docs.blynkapi.apiary.io/#).
 
 ## Limitations and Recommendations
-- Don't put ```Blynk.virtualWrite``` and any other ```Blynk.*``` command inside ```void loop()```- it will cause 
-lot's of outgoing messages to our server and your connection will be terminated; 
+- Don't put ```Blynk.virtualWrite``` and any other ```Blynk.*``` command inside ```void loop()```- it will cause
+lot's of outgoing messages to our server and your connection will be terminated;
 
 - We recommend calling functions with intervals. For example, use [BlynkTimer](http://docs.blynk.cc/#blynk-firmware-blynktimer)
 
 - Avoid using long delays with ```delay()``` – it may cause connection breaks;
 
-- If you send more than 100 values per second - you may cause 
+- If you send more than 100 values per second - you may cause
 [Flood Error](http://docs.blynk.cc/#troubleshooting-flood-error) and your hardware will be automatically disconnected from the server;
 
-- Be careful sending a lot of ```Blynk.virtualWrite``` commands as most hardware is not very powerful (like ESP8266) 
-so it may not handle many requests. 
+- Be careful sending a lot of ```Blynk.virtualWrite``` commands as most hardware is not very powerful (like ESP8266)
+so it may not handle many requests.
